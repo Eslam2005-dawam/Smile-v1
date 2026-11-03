@@ -1,0 +1,23 @@
+:root {
+  color-scheme: light;
+  --ink: #43262e;
+  --ink-soft: #71535b;
+  --wine: #512a35;
+  --rose: #c8416d;
+  --rose-dark: #ac315b;
+  --rose-soft: #f5dce1;
+  --blush: #fff7f6;
+  --paper: #fffdfb;
+  --line: #eedde0;
+  --shadow: 0 14px 38px rgba(91, 48, 59, .08);
+  --ar: 'Cairo', Tahoma, sans-serif;
+  --script: 'Dancing Script', cursive;
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 40px;
+  --space-5: 64px;
+  --space-6: 80px;
+}
+
+/* Manus responsive thresholds retained in manus.css: 1120px, 860px, 560px. */
