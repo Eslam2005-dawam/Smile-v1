@@ -1,6 +1,6 @@
 import { Link, useParams, useSearchParams } from 'react-router'
 import { categories, categoryFromSlug, categoryPath } from '../data/categories'
-import { allProducts, formatProductCount, type Product } from '../data/products'
+import { allProducts, formatProductCount, type Product } from '../data/storeProducts'
 import { ProductGrid } from '../components/products/ProductGrid'
 
 type SortOption = 'recommended' | 'newest' | 'price-asc' | 'price-desc'

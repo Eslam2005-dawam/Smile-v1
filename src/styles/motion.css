@@ -1,0 +1,8 @@
+.product-grid-motion-item {
+  display: flex;
+  min-width: 0;
+}
+
+.product-grid-motion-item > .product-card {
+  flex: 1;
+}

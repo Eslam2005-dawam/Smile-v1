@@ -1,4 +1,4 @@
-import type { Product } from '../../data/products'
+import type { Product } from '../../data/storeProducts'
 import { ProductCard } from './ProductCard'
 
 interface Props {
@@ -8,10 +8,16 @@ interface Props {
   onAdd: (id: string) => void
   ariaLabel: string
   className?: string
+  animateItems?: boolean
 }
 
-export function ProductGrid({ products, favoriteIds, onFavorite, onAdd, ariaLabel, className = '' }: Props) {
+export function ProductGrid({ products, favoriteIds, onFavorite, onAdd, ariaLabel, className = '', animateItems = false }: Props) {
   return <div className={`product-grid${className ? ` ${className}` : ''}`} aria-label={ariaLabel}>
-    {products.map(product => <ProductCard key={product.id} product={product} favorite={favoriteIds.has(product.id)} onFavorite={onFavorite} onAdd={onAdd} />)}
+    {products.map((product) => {
+      const card = <ProductCard product={product} favorite={favoriteIds.has(product.id)} onFavorite={onFavorite} onAdd={onAdd} />
+      return animateItems
+        ? <div className="product-grid-motion-item" data-gsap-target key={product.id}>{card}</div>
+        : <ProductCard key={product.id} product={product} favorite={favoriteIds.has(product.id)} onFavorite={onFavorite} onAdd={onAdd} />
+    })}
   </div>
 }

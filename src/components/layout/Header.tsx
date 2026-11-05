@@ -1,6 +1,6 @@
 import type { FormEvent } from 'react'
 import { Link } from 'react-router'
-import { formatNumber } from '../../data/products'
+import { formatNumber } from '../../data/storeProducts'
 import { Icon } from '../ui/Icon'
 
 interface Props {
@@ -10,7 +10,9 @@ interface Props {
   onMenuToggle: () => void
   onMenuClose: () => void
   cartQuantity: number
+  favoriteQuantity: number
   onCartClick: () => void
+  onFavoritesClick: () => void
   onAccountClick: () => void
 }
 
@@ -18,7 +20,7 @@ const navLinks = [
   ['/#categories', 'الأقسام'], ['/products', 'المنتجات'], ['/#offers', 'العروض'], ['/#our-story', 'حكايتنا'],
 ] as const
 
-export function Header({ query, onQueryChange, menuOpen, onMenuToggle, onMenuClose, cartQuantity, onCartClick, onAccountClick }: Props) {
+export function Header({ query, onQueryChange, menuOpen, onMenuToggle, onMenuClose, cartQuantity, favoriteQuantity, onCartClick, onFavoritesClick, onAccountClick }: Props) {
   function preventSearchNavigation(event: FormEvent<HTMLFormElement>) { event.preventDefault() }
   return <>
     <div className="announcement-bar"><div className="announcement-inner page-shell"><p><Icon name="truck" /> توصيل سريع لجميع المحافظات</p><p><Icon name="shield" /> دفع آمن عند الاستلام</p><p><Icon name="heart" /> أهلاً بكِ في Smile Store</p></div></div>
@@ -30,6 +32,7 @@ export function Header({ query, onQueryChange, menuOpen, onMenuToggle, onMenuClo
         <div className="header-tools">
           <form className="search-box" role="search" onSubmit={preventSearchNavigation}><label className="sr-only" htmlFor="store-search">ابحثي عن منتج</label><input id="store-search" name="search" type="search" placeholder="ابحثي عن منتج..." autoComplete="off" value={query} onChange={event => onQueryChange(event.target.value)} /><button className="search-submit" type="submit" aria-label="بحث"><Icon name="search" /></button></form>
           <button className="icon-button account-button" type="button" aria-label="حسابكِ — غير مفعّل في المعاينة" onClick={onAccountClick}><Icon name="user" /></button>
+          <button className="icon-button wishlist-header-button" type="button" aria-label={`قائمة المفضلة، ${formatNumber.format(favoriteQuantity)} منتجات`} onClick={onFavoritesClick}><Icon name="heart" /><span className="cart-count">{formatNumber.format(favoriteQuantity)}</span></button>
           <button className="icon-button cart-button" type="button" aria-label={`سلة المشتريات التجريبية، ${formatNumber.format(cartQuantity)} منتجات`} onClick={onCartClick}><Icon name="bag" /><span className="cart-count" aria-live="polite">{formatNumber.format(cartQuantity)}</span></button>
         </div>
       </div>

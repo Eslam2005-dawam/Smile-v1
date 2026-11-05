@@ -1,5 +1,8 @@
+import { useRef } from 'react'
 import { Link } from 'react-router'
 import { categories, categoryPath, type CategoryId } from '../../data/categories'
+import { gsap } from '../../animations/gsap'
+import { useGsapMotion } from '../../animations/useGsapMotion'
 
 function CategoryArtwork({ category }: { category: CategoryId }) {
   return <svg className="category-icon" viewBox="0 0 48 48" aria-hidden="true">
@@ -15,11 +18,31 @@ function CategoryArtwork({ category }: { category: CategoryId }) {
 }
 
 export function Categories() {
-  return <section className="category-section page-shell" id="categories" aria-labelledby="categories-title">
+  const sectionRef = useRef<HTMLElement | null>(null)
+
+  useGsapMotion(sectionRef, (root) => {
+    const timeline = gsap.timeline({ scrollTrigger: { trigger: root, start: 'top 86%', once: true } })
+    const heading = root.querySelector<HTMLElement>('.section-heading')
+    const items = root.querySelectorAll<HTMLElement>('.category-item')
+
+    if (heading) timeline.fromTo(heading,
+      { autoAlpha: 0, y: 10 },
+      { autoAlpha: 1, y: 0, duration: 0.38, ease: 'power2.out', clearProps: 'opacity,visibility,transform' },
+    )
+    if (items.length) timeline.fromTo(items,
+      { autoAlpha: 0, y: 9 },
+      { autoAlpha: 1, y: 0, duration: 0.34, stagger: 0.055, ease: 'power2.out', clearProps: 'opacity,visibility,transform' },
+      heading ? '-=0.14' : 0,
+    )
+  })
+
+  return <section className="full-bleed category-section" id="categories" aria-labelledby="categories-title" ref={sectionRef}>
+    <div className="section-inner">
     <div className="section-heading compact-heading"><div><p className="eyebrow"></p><h2 id="categories-title">تسوّقي حسب القسم</h2></div><p className="heading-note">كل الأشياء اللي تحبينها، مرتّبة لكِ.</p></div>
     <div className="category-track" role="group" aria-label="تسوّقي حسب القسم">
-      <Link className="category-item is-active" to="/products"><span className="category-orb orb-pink"><CategoryArtwork category="all" /></span><span>كل المنتجات</span></Link>
-      {categories.map(category => <Link key={category.id} className="category-item" to={categoryPath(category.id)}><span className={`category-orb orb-${category.orb}`}><CategoryArtwork category={category.id} /></span><span>{category.label}</span></Link>)}
+      <Link className="category-item is-active" data-gsap-target to="/products"><span className="category-orb orb-pink"><CategoryArtwork category="all" /></span><span>كل المنتجات</span></Link>
+      {categories.map(category => <Link key={category.id} className="category-item" data-gsap-target to={categoryPath(category.id)}><span className={`category-orb orb-${category.orb}`}><CategoryArtwork category={category.id} /></span><span>{category.label}</span></Link>)}
+    </div>
     </div>
   </section>
 }

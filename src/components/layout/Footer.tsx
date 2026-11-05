@@ -1,4 +1,4 @@
-import { formatNumber } from '../../data/products'
+import { formatNumber } from '../../data/storeProducts'
 import { Link } from 'react-router'
 import { Icon } from '../ui/Icon'
 

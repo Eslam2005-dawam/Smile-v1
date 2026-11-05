@@ -18,6 +18,15 @@
   --space-4: 40px;
   --space-5: 64px;
   --space-6: 80px;
+  --layout-max: 1760px;
+  --layout-gutter: 48px;
+  --layout-gutter-tablet: 32px;
+  --layout-gutter-mobile: 16px;
+  --text-max: 68ch;
+  --section-space: clamp(52px, 6vw, 88px);
+  --section-space-compact: clamp(32px, 4vw, 48px);
+  --text-body: 15px;
+  --line-body: 1.7;
 }
 
 /* Manus responsive thresholds retained in manus.css: 1120px, 860px, 560px. */

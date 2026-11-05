@@ -18,6 +18,17 @@ export interface Product {
   inStock: boolean
   bestSeller: boolean
   newArrival: boolean
+  gallery?: string[]
+  cleanImages?: string[]
+  variants?: string[]
+  priceSource?: 'verified' | 'estimated_market'
+  isEstimatedPrice?: boolean
+  ratingSource?: 'mock'
+  isMockRating?: boolean
+  marketingDataSource?: 'mock_demo'
+  isMockMarketingData?: boolean
+  oldPriceSource?: 'mock_demo'
+  discountSource?: 'mock_demo'
 }
 
 // Manus prototype values; these are sample products and sample prices, not a live catalog.

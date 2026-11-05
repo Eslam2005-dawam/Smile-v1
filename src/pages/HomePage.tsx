@@ -6,7 +6,7 @@ import { OfferBanner } from '../components/home/OfferBanner'
 import { JournalSection } from '../components/home/JournalSection'
 import { NewsletterSection } from '../components/home/NewsletterSection'
 import { ProductSection } from '../components/products/ProductSection'
-import { bestSellers, newArrivals, type Product } from '../data/products'
+import { bestSellers, newArrivals, type Product } from '../data/storeProducts'
 
 interface Props {
   query: string
@@ -22,7 +22,7 @@ function matches(product: Product, query: string) {
 
 export function HomePage({ query, favoriteIds, onFavorite, onAdd }: Props) {
   return <main id="main-content">
-    <Hero />
+    <Hero onAdd={onAdd} />
     <Categories />
     <Benefits />
     <ProductSection id="best-sellers" title="الأكثر مبيعاً" eyebrow="الأكثر حبّاً منكم" products={bestSellers.filter(product => matches(product, query))} favoriteIds={favoriteIds} onFavorite={onFavorite} onAdd={onAdd} />
