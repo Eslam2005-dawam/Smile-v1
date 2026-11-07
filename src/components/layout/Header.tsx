@@ -1,5 +1,5 @@
-import type { FormEvent } from 'react'
-import { Link } from 'react-router'
+import { useEffect, useRef, useState, type FormEvent } from 'react'
+import { Link, useLocation } from 'react-router'
 import { formatNumber } from '../../data/storeProducts'
 import { Icon } from '../ui/Icon'
 
@@ -21,10 +21,24 @@ const navLinks = [
 ] as const
 
 export function Header({ query, onQueryChange, menuOpen, onMenuToggle, onMenuClose, cartQuantity, favoriteQuantity, onCartClick, onFavoritesClick, onAccountClick }: Props) {
+  const isHome = useLocation().pathname === '/'
+  const announcementRef = useRef<HTMLDivElement>(null)
+  const [headerSolid, setHeaderSolid] = useState(() => typeof window !== 'undefined' && window.scrollY > 16)
+
+  useEffect(() => {
+    const announcement = announcementRef.current
+    if (!announcement) return
+    const observer = new IntersectionObserver(([entry]) => setHeaderSolid(!entry.isIntersecting), {
+      rootMargin: '-16px 0px 0px 0px',
+    })
+    observer.observe(announcement)
+    return () => observer.disconnect()
+  }, [])
+
   function preventSearchNavigation(event: FormEvent<HTMLFormElement>) { event.preventDefault() }
   return <>
-    <div className="announcement-bar"><div className="announcement-inner page-shell"><p><Icon name="truck" /> توصيل سريع لجميع المحافظات</p><p><Icon name="shield" /> دفع آمن عند الاستلام</p><p><Icon name="heart" /> أهلاً بكِ في Smile Store</p></div></div>
-    <header className="site-header" id="top">
+    <div className="announcement-bar" ref={announcementRef}><div className="announcement-inner page-shell"><p><Icon name="truck" /> توصيل سريع لجميع المحافظات</p><p><Icon name="shield" /> دفع آمن عند الاستلام</p><p><Icon name="heart" /> أهلاً بكِ في Smile Store</p></div></div>
+    <header className={`site-header${isHome ? " home-header" : ""}${headerSolid ? " is-scrolled" : ""}`} id="top">
       <div className="main-header page-shell">
         <Link className="brand" to="/" aria-label="Smile Store — الصفحة الرئيسية"><span className="brand-script">Smile<span className="brand-heart">♥</span></span><span className="brand-caption">STORE</span></Link>
         <button className="mobile-menu-toggle icon-button" type="button" aria-expanded={menuOpen} aria-controls="mobile-menu" aria-label={menuOpen ? 'أغلقي القائمة' : 'افتحي القائمة'} onClick={onMenuToggle}><Icon name={menuOpen ? 'close' : 'menu'} /></button>
